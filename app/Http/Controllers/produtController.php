@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\product;
+use Illuminate\Support\Facades\Validator;
+
 
 class produtController extends Controller
 {
@@ -16,7 +18,7 @@ class produtController extends Controller
 
     public function displayProduct(Request $request)
     {
-        $product = $this->user->product()->get();
+        //$product = $this->user->product()->get();
     }
 
     public function createProduct(Request $request)

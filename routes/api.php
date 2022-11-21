@@ -26,15 +26,7 @@ Route::group([
     Route::post('login','AuthController@login');
     Route::post('register','AuthController@register');
     Route::post('logout','AuthController@logout');
-   // Route::post('login','authController@login');
-   // Route::post('login','authController@login');
+    Route::post('createProduct','produtController@createProduct');
+    Route::post('uploadFiles','filesController@uploadFiles');
 });
 
-Route::group([
-'middleware'=>'api',
-'namespace'=>'App\Http\Controllers',
-//'prefix'=>'product'
-],function($router){
-    Route::resource('product','produtController');
-   
-});

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\files;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+
 
 class filesController extends Controller
 {
@@ -12,29 +14,36 @@ class filesController extends Controller
     public function uploadFiles(Request $request)
     {
 
+
         $validator = Validator::make($request->all(),[
             'productid'=> 'required',
             'files' => 'required',
             'files.*' => 'required',
         ]);
 
+       // print_r($request->files);
+
+
         if($validator->fails())
         {
             return response()->json($validator->errors(),400); 
         }
  
-        if ($request->file){
-            foreach($request->files as $file) {
+        if ($request->input('files')){
+
+            foreach($request->input('files') as $file) {
  
-                $fileName = $file->getClientOriginalName();
-                $filePath = 'uploads/' . $fileName;
+               // $fileName = $file->getClientOriginalName();
+
+                $filePath = 'uploads/' . $file;
  
-                $path = Storage::disk('public')->put($filePath, file_get_contents($file));
-                $path = Storage::disk('public')->url($path);
+                $path1 = Storage::disk('uploads')->path($filePath);
+                //$path = Storage::disk('uploads')->put($filePath, file_get_contents($file));
+               // $path = Storage::disk('uploads')->url($path);
  
                 // // Create files
                 files::create([
-                    'filename' => $fileName,
+                    'filename' => $file,
                     'productid'=>$request->productid,
                 ]);
             }
